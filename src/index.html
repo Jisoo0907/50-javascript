@@ -6,23 +6,18 @@
     <title>Now To Do</title>
     <link rel="stylesheet" href="/src/styles/reset.css" />
     <link rel="stylesheet" href="/src/styles/style.css" />
+    <script src="/src/js/todo.js" defer></script>
   </head>
   <body>
     <h1>바로 시작 해</h1>
     <!-- 랜덤 문구 나오면 좋겠다 -->
 
     <div class="todo-wrapper">
-      <label for="todo-list"></label>
+      <label for="todo-input"></label>
       <input type="text" id="todo-input" placeholder="할 일을 입력하세요." />
-      <button type="button">추가</button>
+      <button type="button" class="addButton">추가</button>
 
-      <ul>
-        <li class="list">
-          <label for="check"></label>
-          <input type="checkbox" id="check" />
-          JavaScript 3장 공부
-        </li>
-      </ul>
+      <ul class="list"></ul>
     </div>
   </body>
 </html>
