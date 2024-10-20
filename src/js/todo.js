@@ -2,8 +2,21 @@ const todoInput = document.querySelector("#todo-input"); // 입력한 할 일 �
 const addButton = document.querySelector(".addButton"); // 추가 버튼
 const todoList = document.querySelector(".list"); // ul 요소
 
+/* enter로도 추가 버튼 클릭 가능하도록 구현 */
+todoInput.addEventListener("keydown", (event) => {
+  if (event.key === "Enter") {
+    addButton.click();
+  }
+});
+
 /* 새 할 일 생성하기 */
 addButton.addEventListener("click", () => {
+  // 아무 값도 입력하지 않았을 때 알림창 보여주기
+  if (todoInput.value === "" || todoInput.value === " ") {
+    alert("할 일을 작성해주세요.");
+    return;
+  }
+
   const newTodo = document.createElement("span");
   const checkBox = document.createElement("input"); // checkbox
   const removeButton = document.createElement("button"); // 삭제 버튼
