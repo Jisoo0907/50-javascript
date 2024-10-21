@@ -12,7 +12,7 @@ todoInput.addEventListener("keydown", (event) => {
 /* 새 할 일 생성하기 */
 addButton.addEventListener("click", () => {
   // 아무 값도 입력하지 않았을 때 알림창 보여주기
-  if (todoInput.value === "" || todoInput.value === " ") {
+  if (todoInput.value.trim().length === 0) {
     alert("할 일을 작성해주세요.");
     return;
   }
