@@ -2,6 +2,17 @@ const todoInput = document.querySelector("#todo-input"); // 입력한 할 일 �
 const addButton = document.querySelector(".addButton"); // 추가 버튼
 const todoList = document.querySelector(".list"); // ul 요소
 
+/* localStorage에 할 일 저장 */
+function saveTodos(todos) {
+  localStorage.setItem("todos", JSON.stringify(todos));
+}
+
+/* localStorage에서 할 일 불러오기 */
+function getTodos() {
+  const todos = localStorage.getItem("todos");
+  return todos ? JSON.parse(todos) : [];
+}
+
 /* enter로도 추가 버튼 클릭 가능하도록 구현 */
 todoInput.addEventListener("keydown", (event) => {
   if (event.key === "Enter") {
