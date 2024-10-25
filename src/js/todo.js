@@ -36,7 +36,6 @@ function createTodoElement(todoText) {
   removeButton.addEventListener("click", () => {
     const todos = getTodos();
     const index = todos.findIndex((todo) => todo.text === todoText);
-    console.log(index);
 
     if (index > -1) {
       todos.splice(index, 1);
@@ -84,6 +83,16 @@ function addTodo() {
   // 입력창 비우기
   todoInput.value = "";
 }
+
+function renderSavedTodos() {
+  const todos = getTodos();
+  todos.forEach((todo) => {
+    const todoElement = createTodoElement(todo.text);
+    todoList.appendChild(todoElement);
+  });
+}
+
+document.addEventListener("DOMContentLoaded", renderSavedTodos);
 
 // 이벤트 리스너 연결
 addButton.addEventListener("click", addTodo);
