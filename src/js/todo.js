@@ -13,46 +13,39 @@ function getTodos() {
   return todos ? JSON.parse(todos) : [];
 }
 
-/* enter로도 추가 버튼 클릭 가능하도록 구현 */
-todoInput.addEventListener("keydown", (event) => {
-  if (event.key === "Enter") {
-    addButton.click();
-  }
-});
-
-/* 새 할 일 생성하기 */
-addButton.addEventListener("click", () => {
-  // 아무 값도 입력하지 않았을 때 알림창 보여주기
-  if (todoInput.value.trim().length === 0) {
-    alert("할 일을 작성해주세요.");
-    return;
-  }
-
+/* UI 요소 생성하는 함수 */
+function createTodoElement(todoText) {
+  const newTodoList = document.createElement("li"); // 입력한 할 일을 추가할 li 요소
   const newTodo = document.createElement("span");
   const checkBox = document.createElement("input"); // checkbox
   const removeButton = document.createElement("button"); // 삭제 버튼
-  const newTodoList = document.createElement("li"); // 입력한 할 일을 추가할 li 요소
-  // 버튼 클릭 시 추가하는 로직
 
+  // 기본 속성 설정
   newTodo.className = "new-todo";
   checkBox.type = "checkBox";
-  newTodo.innerText = todoInput.value;
+  newTodo.innerText = todoText;
   removeButton.className = "remove-button";
   removeButton.innerText = "삭제";
 
+  // 요소 조립
   newTodoList.appendChild(checkBox);
   newTodoList.appendChild(newTodo);
   newTodoList.appendChild(removeButton);
-  todoList.appendChild(newTodoList);
-  // 항목 여러개 추가가 안됨 이슈
-  todoInput.value = ""; // 리스트에 추가 후 input 비우기
 
-  // 할 일 삭제하기
+  // 삭제 기능
   removeButton.addEventListener("click", () => {
+    const todos = getTodos();
+    const index = todos.findIndex((todo) => todo.text === todoText);
+    console.log(index);
+
+    if (index > -1) {
+      todos.splice(index, 1);
+      saveTodos(todos);
+    }
     todoList.removeChild(newTodoList);
   });
 
-  // 체크박스 체크 시 할 일 완료 됐다는 표시 되도록 (각 할 일 항목에 클릭 이벤트)
+  // 체크박스 체크 시 할 일 완료 됐다는 표시
   todoList.addEventListener("click", () => {
     if (checkBox.checked) {
       newTodo.classList.add("checked");
@@ -60,4 +53,42 @@ addButton.addEventListener("click", () => {
       newTodo.classList.remove("checked");
     }
   });
+
+  return newTodoList;
+}
+
+/* 할 일 추가하는 함수 */
+function addTodo() {
+  // 빈 입력 체크
+  if (todoInput.value.trim().length === 0) {
+    alert("할 일을 작성해주세요.");
+    return;
+  }
+
+  // 기존 할 일 목록 가져오기
+  const todos = getTodos();
+
+  // 새로운 할 일 추가
+  todos.push({
+    text: todoInput.value,
+    completed: false,
+  });
+
+  // localStorage에 저장
+  saveTodos(todos);
+
+  // UI에 추가(createTodoElement 함수 사용)
+  const newTodoList = createTodoElement(todoInput.value);
+  todoList.appendChild(newTodoList);
+
+  // 입력창 비우기
+  todoInput.value = "";
+}
+
+// 이벤트 리스너 연결
+addButton.addEventListener("click", addTodo);
+todoInput.addEventListener("keydown", (event) => {
+  if (event.key === "Enter") {
+    addTodo();
+  }
 });
