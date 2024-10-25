@@ -84,15 +84,13 @@ function addTodo() {
   todoInput.value = "";
 }
 
-function renderSavedTodos() {
-  const todos = getTodos();
+function renderTodos() {
+  const todos = getTodos(); // localStorage에서 할 일 목록 가져오기
   todos.forEach((todo) => {
-    const todoElement = createTodoElement(todo.text);
-    todoList.appendChild(todoElement);
+    const todoElement = createTodoElement(todo.text); // 각 할 일 요소 생성
+    todoList.appendChild(todoElement); // 화면에 추가
   });
 }
-
-document.addEventListener("DOMContentLoaded", renderSavedTodos);
 
 // 이벤트 리스너 연결
 addButton.addEventListener("click", addTodo);
@@ -101,3 +99,5 @@ todoInput.addEventListener("keydown", (event) => {
     addTodo();
   }
 });
+// 페이지 로드 시 할 일 목록 렌더링
+document.addEventListener("DOMContentLoaded", renderTodos);
