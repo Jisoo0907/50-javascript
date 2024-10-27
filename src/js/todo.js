@@ -13,8 +13,41 @@ function getTodos() {
   return todos ? JSON.parse(todos) : [];
 }
 
-/* UI 요소 생성하는 함수 */
-function createTodoElement(todoText) {
+/* 할 일 삭제 */
+function removeTodo(todoText, todoElement) {
+  // 저장된 전체 할 일 배열 가져옴
+  const todos = getTodos();
+  const index = todos.findIndex((todo) => todo.text === todoText);
+
+  if (index > -1) {
+    todos.splice(index, 1);
+    saveTodos(todos);
+  }
+  todoList.removeChild(todoElement);
+}
+
+/* 할 일 체크 상태 토글 함수 */
+function toggleCheckTodo(todoText, checkBox, todoSpan) {
+  const todos = getTodos();
+  // 전체 할 일 중 사용자가 클릭한 할 일(todoText와 일치하는) 찾음
+  // 찾은 할 일의 완료 상태(completed)를 업데이트하고 다시 저장해야 함
+  // find()는 객체 자체를 반환
+  const todo = todos.find((todo) => todo.text === todoText);
+
+  if (todo) {
+    todo.completed = checkBox.checked;
+    saveTodos(todos);
+  }
+
+  if (checkBox.checked) {
+    todoSpan.classList.add("checked");
+  } else {
+    todoSpan.classList.remove("checked");
+  }
+}
+
+/* UI 요소 생성하는 함수(새로운 할 일 목록 생성) */
+function createTodoElement(todoText, isCompleted = false) {
   const newTodoList = document.createElement("li"); // 입력한 할 일을 추가할 li 요소
   const newTodo = document.createElement("span");
   const checkBox = document.createElement("input"); // checkbox
@@ -23,37 +56,37 @@ function createTodoElement(todoText) {
   // 기본 속성 설정
   newTodo.className = "new-todo";
   checkBox.type = "checkBox";
+  checkBox.checked = isCompleted;
   newTodo.innerText = todoText;
   removeButton.className = "remove-button";
   removeButton.innerText = "삭제";
+
+  // 초기 상태 설정
+  if (isCompleted) {
+    newTodo.classList.add("checked");
+  }
 
   // 요소 조립
   newTodoList.appendChild(checkBox);
   newTodoList.appendChild(newTodo);
   newTodoList.appendChild(removeButton);
 
-  // 삭제 기능
-  removeButton.addEventListener("click", () => {
-    const todos = getTodos();
-    const index = todos.findIndex((todo) => todo.text === todoText);
-
-    if (index > -1) {
-      todos.splice(index, 1);
-      saveTodos(todos);
-    }
-    todoList.removeChild(newTodoList);
+  // 체크박스 이벤트 리스너
+  checkBox.addEventListener("change", () => {
+    toggleCheckTodo(todoText, checkBox, newTodo);
   });
 
-  // 체크박스 체크 시 할 일 완료 됐다는 표시
-  todoList.addEventListener("click", () => {
-    if (checkBox.checked) {
-      newTodo.classList.add("checked");
-    } else {
-      newTodo.classList.remove("checked");
-    }
+  // 삭제 버튼 이벤트 리스너
+  removeButton.addEventListener("click", () => {
+    removeTodo(todoText, newTodoList);
   });
 
   return newTodoList;
+}
+
+/* 생성된 할 일 요소를 화면에 표시 */
+function appendTodo(todoElement) {
+  todoList.appendChild(todoElement);
 }
 
 /* 할 일 추가하는 함수 */
@@ -78,7 +111,7 @@ function addTodo() {
 
   // UI에 추가(createTodoElement 함수 사용)
   const newTodoList = createTodoElement(todoInput.value);
-  todoList.appendChild(newTodoList);
+  appendTodo(newTodoList);
 
   // 입력창 비우기
   todoInput.value = "";
@@ -88,7 +121,8 @@ function renderTodos() {
   const todos = getTodos(); // localStorage에서 할 일 목록 가져오기
   todos.forEach((todo) => {
     const todoElement = createTodoElement(todo.text); // 각 할 일 요소 생성
-    todoList.appendChild(todoElement); // 화면에 추가
+
+    appendTodo(todoElement); // 화면에 추가
   });
 }
 
