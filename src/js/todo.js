@@ -27,7 +27,7 @@ function removeTodo(todoText, todoElement) {
 }
 
 /* 할 일 체크 상태 토글 함수 */
-function toggleCheckTodo(todoText, checkBox, todoSpan) {
+function toggleTodoCompleted(todoText, checkBox, todoSpan) {
   const todos = getTodos();
   // 전체 할 일 중 사용자가 클릭한 할 일(todoText와 일치하는) 찾음
   // 찾은 할 일의 완료 상태(completed)를 업데이트하고 다시 저장해야 함
@@ -73,7 +73,7 @@ function createTodoElement(todoText, isCompleted = false) {
 
   // 체크박스 이벤트 리스너
   checkBox.addEventListener("change", () => {
-    toggleCheckTodo(todoText, checkBox, newTodo);
+    toggleTodoCompleted(todoText, checkBox, newTodo);
   });
 
   // 삭제 버튼 이벤트 리스너
@@ -90,13 +90,7 @@ function appendTodo(todoElement) {
 }
 
 /* 할 일 추가하는 함수 */
-function addTodo() {
-  // 빈 입력 체크
-  if (todoInput.value.trim().length === 0) {
-    alert("할 일을 작성해주세요.");
-    return;
-  }
-
+function addTodo(todoText, isCompleted = false) {
   // 기존 할 일 목록 가져오기
   const todos = getTodos();
 
@@ -110,7 +104,7 @@ function addTodo() {
   saveTodos(todos);
 
   // UI에 추가(createTodoElement 함수 사용)
-  const newTodoList = createTodoElement(todoInput.value);
+  const newTodoList = createTodoElement(todoText, isCompleted);
   appendTodo(newTodoList);
 
   // 입력창 비우기
@@ -120,14 +114,20 @@ function addTodo() {
 function renderTodos() {
   const todos = getTodos(); // localStorage에서 할 일 목록 가져오기
   todos.forEach((todo) => {
-    const todoElement = createTodoElement(todo.text); // 각 할 일 요소 생성
-
+    const todoElement = createTodoElement(todo.text, todo.completed); // 각 할 일 요소 생성
     appendTodo(todoElement); // 화면에 추가
   });
 }
 
 // 이벤트 리스너 연결
-addButton.addEventListener("click", addTodo);
+addButton.addEventListener("click", () => {
+  // 빈 입력 체크
+  if (todoInput.value.trim()) {
+  } else {
+    alert("할 일을 작성해주세요.");
+  }
+});
+
 todoInput.addEventListener("keydown", (event) => {
   if (event.key === "Enter") {
     addTodo();
