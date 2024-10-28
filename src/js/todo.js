@@ -1,6 +1,7 @@
 const todoInput = document.querySelector("#todo-input"); // 입력한 할 일 가져오기
 const addButton = document.querySelector(".addButton"); // 추가 버튼
 const todoList = document.querySelector(".list"); // ul 요소
+let todos = [];
 
 /* localStorage에 할 일 저장 */
 function saveTodos(todos) {
@@ -39,11 +40,7 @@ function toggleTodoCompleted(todoText, checkBox, todoSpan) {
     saveTodos(todos);
   }
 
-  if (checkBox.checked) {
-    todoSpan.classList.add("checked");
-  } else {
-    todoSpan.classList.remove("checked");
-  }
+  todoSpan.classList.toggle("checked", checkBox.checked);
 }
 
 /* UI 요소 생성하는 함수(새로운 할 일 목록 생성) */
@@ -91,15 +88,11 @@ function appendTodo(todoElement) {
 
 /* 할 일 추가하는 함수 */
 function addTodo(todoText, isCompleted = false) {
-  // 기존 할 일 목록 가져오기
-  const todos = getTodos();
-
   // 새로운 할 일 추가
   todos.push({
     text: todoInput.value,
     completed: false,
   });
-
   // localStorage에 저장
   saveTodos(todos);
 
@@ -112,7 +105,7 @@ function addTodo(todoText, isCompleted = false) {
 }
 
 function renderTodos() {
-  const todos = getTodos(); // localStorage에서 할 일 목록 가져오기
+  todos = getTodos();
   todos.forEach((todo) => {
     const todoElement = createTodoElement(todo.text, todo.completed); // 각 할 일 요소 생성
     appendTodo(todoElement); // 화면에 추가
