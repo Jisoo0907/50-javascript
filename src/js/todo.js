@@ -1,7 +1,6 @@
 const todoInput = document.querySelector("#todo-input"); // 입력한 할 일 가져오기
 const addButton = document.querySelector(".addButton"); // 추가 버튼
 const todoList = document.querySelector(".list"); // ul 요소
-let todos = [];
 
 /* localStorage에 할 일 저장 */
 function saveTodos(todos) {
@@ -57,6 +56,7 @@ function createTodoElement(todoText, isCompleted = false) {
   newTodo.innerText = todoText;
   removeButton.className = "remove-button";
   removeButton.innerText = "삭제";
+  removeButton.setAttribute("aria-label", `${todoText} 삭제`);
 
   // 초기 상태 설정
   if (isCompleted) {
@@ -88,9 +88,15 @@ function appendTodo(todoElement) {
 
 /* 할 일 추가하는 함수 */
 function addTodo(todoText, isCompleted = false) {
+  const todos = getTodos();
+  // 빈 입력 체크
+  if (todoInput.value.trim().length === 0) {
+    alert("할 일을 작성해주세요.");
+    return;
+  }
   // 새로운 할 일 추가
   todos.push({
-    text: todoInput.value,
+    text: todoText,
     completed: false,
   });
   // localStorage에 저장
@@ -105,7 +111,8 @@ function addTodo(todoText, isCompleted = false) {
 }
 
 function renderTodos() {
-  todos = getTodos();
+  const todos = getTodos();
+
   todos.forEach((todo) => {
     const todoElement = createTodoElement(todo.text, todo.completed); // 각 할 일 요소 생성
     appendTodo(todoElement); // 화면에 추가
@@ -113,17 +120,11 @@ function renderTodos() {
 }
 
 // 이벤트 리스너 연결
-addButton.addEventListener("click", () => {
-  // 빈 입력 체크
-  if (todoInput.value.trim()) {
-  } else {
-    alert("할 일을 작성해주세요.");
-  }
-});
+addButton.addEventListener("click", () => addTodo(todoInput.value));
 
 todoInput.addEventListener("keydown", (event) => {
   if (event.key === "Enter") {
-    addTodo();
+    addTodo(todoInput.value);
   }
 });
 // 페이지 로드 시 할 일 목록 렌더링
