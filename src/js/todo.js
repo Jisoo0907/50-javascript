@@ -55,7 +55,7 @@ function createTodoElement(todoText, isCompleted = false) {
   checkBox.checked = isCompleted;
   newTodo.innerText = todoText;
   removeButton.className = "removeButton";
-  removeButton.innerText = "삭제";
+  removeButton.innerText = "X";
   removeButton.setAttribute("aria-label", `${todoText} 삭제`);
 
   // 초기 상태 설정
