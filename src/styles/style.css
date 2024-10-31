@@ -35,6 +35,8 @@ body {
 
 .list li {
   margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
 }
 
 .checked {
@@ -50,10 +52,16 @@ body {
 #todo-input {
   border: none;
   background-color: transparent;
-  border-bottom: 1px solid #1d3d5e;
   width: 18.75rem;
   height: 2rem;
   margin-bottom: 2rem;
+  border-bottom: 1px solid #1d3d5e;
+}
+
+#todo-input:focus {
+  outline: none;
+  border: 1px solid #1d3d5e;
+  border-radius: 0.1875rem;
 }
 
 input[type="checkbox"] {
