@@ -2,6 +2,13 @@ const todoInput = document.querySelector("#todo-input"); // 입력한 할 일 �
 const addButton = document.querySelector(".addButton"); // 추가 버튼
 const todoList = document.querySelector(".list"); // ul 요소
 
+let date = new Date();
+const today = document.querySelector(".today");
+const now = `${date.getFullYear()}년 ${
+  date.getMonth() + 1
+}월 ${date.getDate()}일`;
+today.appendChild(document.createTextNode(now));
+
 /* localStorage에 할 일 저장 */
 function saveTodos(todos) {
   localStorage.setItem("todos", JSON.stringify(todos));
