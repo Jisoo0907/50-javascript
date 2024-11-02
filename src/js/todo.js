@@ -2,7 +2,7 @@ const todoInput = document.querySelector("#todo-input"); // 입력한 할 일 �
 const addButton = document.querySelector(".addButton"); // 추가 버튼
 const todoList = document.querySelector(".list"); // ul 요소
 
-let date = new Date();
+const date = new Date();
 const today = document.querySelector(".today");
 const now = `${date.getFullYear()}년 ${
   date.getMonth() + 1

@@ -9,17 +9,19 @@
     <script src="/src/js/todo.js" defer></script>
   </head>
   <body>
-    <h1 class="title"><span class="today"></span>, 바로 시작 해</h1>
-    <!-- 랜덤 문구 나오면 좋겠다 -->
+    <div role="wrapper" id="main">
+      <h1 class="title"><span class="today"></span>, 바로 시작 해</h1>
+      <!-- 랜덤 문구 나오면 좋겠다 -->
 
-    <div class="todo-wrapper">
-      <label for="todo-input"></label>
-      <input type="text" id="todo-input" placeholder="할 일을 입력하세요." />
-      <button type="button" class="addButton" aria-label="할 일 추가">
-        추가
-      </button>
+      <div class="todo-wrapper">
+        <label for="todo-input"></label>
+        <input type="text" id="todo-input" placeholder="할 일을 입력하세요." />
+        <button type="button" class="addButton" aria-label="할 일 추가">
+          추가
+        </button>
 
-      <ul class="list"></ul>
+        <ul class="list"></ul>
+      </div>
     </div>
   </body>
 </html>
