@@ -21,6 +21,7 @@ body {
 #main {
   background-color: #fff;
   border-radius: 0.625rem;
+  filter: drop-shadow(0rem 0rem 0.75rem #3b93eb);
   margin-top: 4rem;
   display: flex;
   flex-direction: column;
@@ -32,16 +33,23 @@ body {
 .removeButton {
   border: none;
   border-radius: 0.3125rem;
-  margin-left: 1rem;
 }
 
 .removeButton {
-  color: gray;
+  color: rgba(255, 0, 0, 0.588);
+  margin-left: 0.5rem;
 }
 
 .addButton {
+  margin-left: 1rem;
   width: 2.5rem;
   height: 1.8rem;
+  background-color: #1d3d5e;
+  color: #fff;
+}
+
+.addButton:hover {
+  background: #326aa1;
 }
 
 .list {

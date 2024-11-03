@@ -126,6 +126,15 @@ function renderTodos() {
   });
 }
 
+function reorderTodos() {
+  const todos = getTodos();
+  const checked = todos.completed;
+
+  console.log(checked);
+}
+
+reorderTodos();
+
 // 이벤트 리스너 연결
 addButton.addEventListener("click", () => addTodo(todoInput.value));
 
