@@ -52,6 +52,7 @@ function toggleTodoCompleted(todoText, checkBox, todoSpan) {
   }
 
   todoSpan.classList.toggle("checked", checkBox.checked);
+  renderTodos(); // 변경된 완료 상태에 따라 즉시 재정렬하여 다시 렌더링
 }
 
 /* UI 요소 생성하는 함수(새로운 할 일 목록 생성) */
@@ -123,6 +124,8 @@ function addTodo(todoText, isCompleted = false) {
 }
 
 function renderTodos() {
+  todoList.innerHTML = ""; // 기존 할 일 목록 비우기
+
   const todos = reorderTodos(); // 목록 재정렬 후 가져오기
 
   todos.forEach((todo) => {
@@ -134,13 +137,11 @@ function renderTodos() {
 /* 완료된 할 일은 맨 아래로 재정렬 */
 function reorderTodos() {
   const todos = getTodos();
-
   const completed = todos.filter((todo) => todo.completed === true);
   const notCompleted = todos.filter((todo) => todo.completed === false);
+  const reordered = [...notCompleted, ...completed];
 
-  let reordered = [...notCompleted, ...completed];
   saveTodos(reordered);
-
   return reordered;
 }
 
