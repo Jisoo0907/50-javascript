@@ -16,8 +16,13 @@ function saveTodos(todos) {
 
 /* localStorage에서 할 일 불러오기 */
 function getTodos() {
-  const todos = localStorage.getItem("todos");
-  return todos ? JSON.parse(todos) : [];
+  try {
+    const todos = localStorage.getItem("todos");
+    return todos ? JSON.parse(todos) : [];
+  } catch (error) {
+    console.error("에러 발생: ", error);
+    return [];
+  }
 }
 
 /* 할 일 삭제 */
@@ -118,7 +123,7 @@ function addTodo(todoText, isCompleted = false) {
 }
 
 function renderTodos() {
-  const todos = getTodos();
+  const todos = reorderTodos(); // 목록 재정렬 후 가져오기
 
   todos.forEach((todo) => {
     const todoElement = createTodoElement(todo.text, todo.completed); // 각 할 일 요소 생성
@@ -126,14 +131,18 @@ function renderTodos() {
   });
 }
 
+/* 완료된 할 일은 맨 아래로 재정렬 */
 function reorderTodos() {
   const todos = getTodos();
-  const checked = todos.completed;
 
-  console.log(checked);
+  const completed = todos.filter((todo) => todo.completed === true);
+  const notCompleted = todos.filter((todo) => todo.completed === false);
+
+  let reordered = [...notCompleted, ...completed];
+  saveTodos(reordered);
+
+  return reordered;
 }
-
-reorderTodos();
 
 // 이벤트 리스너 연결
 addButton.addEventListener("click", () => addTodo(todoInput.value));
