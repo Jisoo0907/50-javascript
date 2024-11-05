@@ -105,11 +105,11 @@ input[type="checkbox"] {
   }
 
   #todo-input {
-    width: 16rem;
+    width: 15rem;
   }
 
   .title {
-    font-size: 1.7rem;
+    font-size: 1.3rem;
   }
 
   .new-todo {
