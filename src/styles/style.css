@@ -6,10 +6,16 @@
   font-style: normal;
 }
 
+:root {
+  --deep-blue: #1d3d5e;
+  --sky-blue: #b8d0ed;
+}
+
 body {
+  min-width: 480px;
   font-family: "Pretendard-Regular";
-  background-color: #b8d0ed;
-  color: #1d3d5e;
+  background-color: var(--sky-blue);
+  color: var(--deep-blue);
   font-size: 1.2rem;
   display: flex;
   flex-direction: column;
@@ -44,7 +50,7 @@ body {
   margin-left: 1rem;
   width: 2.5rem;
   height: 1.8rem;
-  background-color: #1d3d5e;
+  background-color: var(--deep-blue);
   color: #fff;
 }
 
@@ -78,16 +84,35 @@ body {
   width: 18.75rem;
   height: 2rem;
   margin-bottom: 2rem;
-  border-bottom: 1px solid #1d3d5e;
+  border-bottom: 1px solid var(--deep-blue);
 }
 
 #todo-input:focus {
   outline: none;
-  border: 1px solid #1d3d5e;
+  border: 1px solid var(--deep-blue);
   border-radius: 0.1875rem;
 }
 
 input[type="checkbox"] {
   width: 1rem;
   height: 1rem;
+}
+
+/* 모바일 */
+@media (max-width: 480px) {
+  body {
+    width: 100%;
+  }
+
+  #todo-input {
+    width: 16rem;
+  }
+
+  .title {
+    font-size: 1.7rem;
+  }
+
+  .new-todo {
+    font-size: 1rem;
+  }
 }
