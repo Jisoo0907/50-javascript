@@ -98,7 +98,7 @@ input[type="checkbox"] {
   height: 1rem;
 }
 
-/* 모바일 */
+/* 480px 이하 */
 @media (max-width: 480px) {
   body {
     width: 100%;
@@ -114,5 +114,23 @@ input[type="checkbox"] {
 
   .new-todo {
     font-size: 1rem;
+  }
+}
+
+@media (max-width: 320px) {
+  body {
+    width: 100%;
+  }
+
+  #todo-input {
+    width: 13.5rem;
+  }
+
+  .title {
+    font-size: 1.2rem;
+  }
+
+  .new-todo {
+    font-size: 0.8rem;
   }
 }
